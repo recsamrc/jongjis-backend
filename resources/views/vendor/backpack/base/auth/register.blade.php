@@ -33,41 +33,42 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="email">{{ __('register.user.email') }}</label>
-                            
+                            <label class="control-label" for="{{ backpack_authentication_column() }}">{{ config('backpack.base.authentication_column_name') }}</label>
+
                             <div>
-                                <input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" id="email" value="{{ old('email') }}">
-                                
-                                @if ($errors->has('email'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
+                                <input type="{{ backpack_authentication_column()=='email'?'email':'text'}}" class="form-control{{ $errors->has(backpack_authentication_column()) ? ' is-invalid' : '' }}" name="{{ backpack_authentication_column() }}" id="{{ backpack_authentication_column() }}" value="{{ old(backpack_authentication_column()) }}">
+
+                                @if ($errors->has(backpack_authentication_column()))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first(backpack_authentication_column()) }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="password">{{ __('register.user.password') }}</label>
-                            
+                            <label class="control-label" for="password">{{ trans('backpack::base.password') }}</label>
+
                             <div>
-                                <input type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" id="password">
-                                
+                                <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" id="password">
+
                                 @if ($errors->has('password'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('password') }}</strong>
-                                </span>
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label class="control-label" for="password_confirmation">{{ __('register.user.password_confirmation') }}</label>
-                            
+                            <label class="control-label" for="password_confirmation">{{ trans('backpack::base.confirm_password') }}</label>
+
                             <div>
-                                <input type="text" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" id="password_confirmation">
-                                
+                                <input type="password" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" id="password_confirmation">
+
                                 @if ($errors->has('password_confirmation'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                </span>
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>

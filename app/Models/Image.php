@@ -19,9 +19,17 @@ class Image extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = ['is_featured', 'file', 'image_type', 'related_id'];
     // protected $hidden = [];
     // protected $dates = [];
+    public $timestamps = false;
+    protected $attributes = [
+        'file_url' => '',
+        'is_featured' => 0,
+    ];
+
+    const TYPE_BIKE = 'type_bike';
+    const TYPE_SHOP = 'type_shop';
 
     /*
     |--------------------------------------------------------------------------

@@ -24,7 +24,7 @@ class User extends Authenticatable
     protected $guarded = ['id'];
     protected $fillable = [
         'username', 'password', 'avatar', 'fullname', 'contact', 'email',
-        'user_category_id', 'status'
+        'user_group_id', 'status'
     ];
     protected $hidden = ['password', 'remember_token'];
     // protected $dates = [];
@@ -34,7 +34,7 @@ class User extends Authenticatable
     ];
     protected $attributes = [
         'avatar' => '',
-        'user_category_id' => 1,
+        'user_group_id' => 2,
         'status' => 1,
     ];
 

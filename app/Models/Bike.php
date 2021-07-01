@@ -5,6 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Bike extends Model
 {
@@ -20,7 +21,10 @@ class Bike extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = [
+        'bike_name', 'description', 'weight', 'height', 'rent_price', 'availability',
+        'bike_category_id', 'shop_id',
+    ];
     // protected $hidden = [];
     // protected $dates = [];
     public $timestamps = false;
@@ -38,17 +42,17 @@ class Bike extends Model
     */
     public function category()
     {
-        return $this->belongsTo(BikeCategory::class);
+        return $this->belongsTo(BikeCategory::class, 'bike_category_id', 'id');
     }
 
     public function shop()
     {
-        return $this->belongsTo(Shop::class);
+        return $this->belongsTo(Shop::class, 'shop_id', 'id');
     }
 
     public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany(Image::class, 'related_id', 'id');
     }
 
     /*
@@ -68,12 +72,14 @@ class Bike extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    public function setPhotosAttribute($value)
+
+    /*
+    |--------------------------------------------------------------------------
+    | HELPERS
+    |--------------------------------------------------------------------------
+    */
+    protected function storeImage($imageFile)
     {
-        $images = (array)json_decode($value);
-        foreach($images as $image) {
-            
-        }
-        $this->attributes['photos'] = $images[0]->file_url;
+        return Storage::put('/images', $imageFile);
     }
 }

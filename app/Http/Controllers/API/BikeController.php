@@ -30,7 +30,7 @@ class BikeController extends APIController
             ->when(request('shop_id'), function (Builder $q) {
                 $q->where('shop_id', request('shop_id'));
             })->when(request('category_id'), function (Builder $q) {
-                $q->where('category_id', request('category_id'));
+                $q->where('bike_category_id', request('category_id'));
             })->orderBy($sortColumn, $orderBy)
             ->paginate($perPage, $columns, 'page', $currentPage);
         $collection = new PaginatedCollection($data, BikeResource::class);

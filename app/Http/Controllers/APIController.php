@@ -8,4 +8,8 @@ use Illuminate\Http\Request;
 class APIController extends Controller
 {
     use APIResponseTrait;
+
+    public function __construct()
+    {
+    }
 }

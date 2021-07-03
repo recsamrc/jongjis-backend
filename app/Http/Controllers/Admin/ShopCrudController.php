@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ShopRequest;
+use App\Models\Image;
+use App\Traits\ImageTrait;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Prologue\Alerts\Facades\Alert;
 
 /**
  * Class ShopCrudController
@@ -14,11 +17,12 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class ShopCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation {store as TraitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\InlineCreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use ImageTrait;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -121,35 +125,40 @@ class ShopCrudController extends CrudController
     {
         CRUD::setValidation(ShopRequest::class);
 
-        Crud::addField([
+        CRUD::addField([
             'name' => 'shop_name',
             'label' => 'Shop Name',
             'type' => 'text',
         ]);
-        Crud::addField([
+        CRUD::addField([
             'name' => 'owner_name',
             'label' => 'Owner Name',
             'type' => 'text',
         ]);
-        Crud::addField([
+        CRUD::addField([
             'name' => 'address',
             'label' => 'Shop Address',
             'type' => 'text',
         ]);
-        Crud::addField([
+        CRUD::addField([
             'name' => 'email_address',
             'label' => 'Shop Email',
             'type' => 'email',
         ]);
-        Crud::addField([
+        CRUD::addField([
             'name' => 'contact_no',
             'label' => 'Shop Phone Number',
             'type' => 'text',
         ]);
-        Crud::addField([
+        CRUD::addField([
             'name' => 'website',
             'label' => 'Shop Website',
             'type' => 'url',
+        ]);
+        CRUD::addField([
+            'name' => 'image',
+            'label' => 'Cover',
+            'type' => 'image',
         ]);
     }
 
@@ -165,8 +174,41 @@ class ShopCrudController extends CrudController
 
     public function store()
     {
-        $this->crud->getRequest()->request->add(['updated_by'=> backpack_user()->id]);
-        $response = $this->traitStore();
-        return $response;
+        $this->crud->hasAccessOrFail('create');
+
+        $request = $this->crud->validateRequest();
+        $request->add(['updated_by'=> backpack_user()->id]);
+        $images = $request->get('images');
+
+        $item = $this->crud->create($this->crud->getStrippedSaveRequest());
+        $this->data['entry'] = $this->crud->entry = $item;
+        $this->saveMultipleImages($images, $item['id'], Image::TYPE_SHOP);
+
+        Alert::success(trans('backpack::crud.insert_success'))->flash();
+
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
+    }
+
+    public function update()
+    {
+        $this->crud->hasAccessOrFail('update');
+
+        $request = $this->crud->validateRequest();
+        $images = $request->get('images');
+
+        $item = $this->crud->update(
+            $request->get($this->crud->model->getKeyName()),
+            $this->crud->getStrippedSaveRequest()
+        );
+        $this->data['entry'] = $this->crud->entry = $item;
+        $this->saveMultipleImages($images, $item['id'], Image::TYPE_SHOP);
+
+        Alert::success(trans('backpack::crud.update_success'))->flash();
+
+        $this->crud->setSaveAction();
+
+        return $this->crud->performSaveAction($item->getKey());
     }
 }

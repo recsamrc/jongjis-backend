@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `jongjis`;
 CREATE DATABASE IF NOT EXISTS `jongjis`
     COLLATE utf8mb4_unicode_ci;
 
@@ -14,21 +15,26 @@ CREATE TABLE `tbl_advertisements` (
   `end_date` date NOT NULL,
   `location` int(1) NOT NULL,
   `amount` float NOT NULL,
-  `user_id` int(11)
+  `user_id` int(11),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_bike_categories`;
 CREATE TABLE `tbl_bike_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `category_name` varchar(30) NOT NULL,
-  `description` varchar(100) NOT NULL
+  `description` varchar(100) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_bike_brands`;
 CREATE TABLE `tbl_bike_brands` (
   `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `brand_name` varchar(30) NOT NULL,
-  `description` varchar(100) NOT NULL
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_bikes`;
@@ -41,21 +47,25 @@ CREATE TABLE `tbl_bikes` (
   `weight` varchar(10),
   `height` varchar(10),
   `rent_price` float NOT NULL,
-  `availability` int(1) NOT NULL
+  `availability` int(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_clients`;
 CREATE TABLE `tbl_clients` (
   `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `client_code` varchar(15) NOT NULL,
-  `avatar` blob NOT NULL,
+  `profile` varchar(255),
   `client_name` varchar(30) NOT NULL,
   `email_address` varchar(30) NOT NULL,
   `contact_number` varchar(15) NOT NULL,
   `complete_address` varchar(100) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `status` int(1) NOT NULL
+  `status` int(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_payments`;
@@ -66,7 +76,9 @@ CREATE TABLE `tbl_payments` (
   `paid_by` varchar(30) NOT NULL,
   `payment_date` date NOT NULL,
   `remarks` varchar(100) NOT NULL,
-  `user_id` int(11)
+  `user_id` int(11),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_penalties`;
@@ -77,7 +89,9 @@ CREATE TABLE `tbl_penalties` (
   `payment_status` int(1) NOT NULL,
   `remarks` varchar(100) NOT NULL,
   `paid_by` varchar(30) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_rentals`;
@@ -91,7 +105,9 @@ CREATE TABLE `tbl_rentals` (
   `payment_status` int(1) NOT NULL,
   `rental_status` int(1) NOT NULL,
   `remarks` varchar(100) NOT NULL,
-  `user_id` int(11)
+  `user_id` int(11),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_shops`;
@@ -105,7 +121,9 @@ CREATE TABLE `tbl_shops` (
   `website` varchar(30) NOT NULL,
   `updated_by` int(11) NOT NULL,
   `map_lat` varchar(20),
-  `map_lng` varchar(20)
+  `map_lng` varchar(20),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_users`;
@@ -113,13 +131,15 @@ CREATE TABLE `tbl_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `email` varchar(30) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `avatar` blob,
+  `profile` varchar(255),
   `username` varchar(30) NOT NULL,
   `fullname` varchar(50) NOT NULL,
   `contact` varchar(15) NOT NULL,
   `user_group_id` int(11),
   `remember_token` varchar(100),
-  `status` int(1) NOT NULL
+  `status` int(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_images`;
@@ -128,7 +148,9 @@ CREATE TABLE `tbl_images` (
   `is_featured` int(1) NOT NULL,
   `file` varchar(255) NOT NULL,
   `image_type` enum('type_bike', 'type_shop'),
-  `related_id` int(11)
+  `related_id` int(11),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS `tbl_user_groups`;
@@ -141,7 +163,9 @@ CREATE TABLE `tbl_user_groups` (
   `allow_delete` int(1) NOT NULL,
   `allow_print` int(1) NOT NULL,
   `allow_import` int(1) NOT NULL,
-  `allow_export` int(1) NOT NULL
+  `allow_export` int(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 );
 
 ALTER TABLE `tbl_advertisements`

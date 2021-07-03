@@ -3,30 +3,61 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\APIController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\API\BikeRequest;
+use App\Http\Resources\API\BikeResource;
+use App\Http\Resources\API\PaginatedCollection;
 use App\Models\Bike;
 use Illuminate\Http\Request;
 
 class BikeController extends APIController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected $bikeModel;
+
+    public function __construct(Bike $bikeModel)
     {
-        $bikes = Bike::latest();
-        return $this->successResponse('Bikes retreived successfully!', $bikes);
+        $this->bikeModel = $bikeModel;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+    public function index(Request $request)
+    {
+        $columns = ['*'];
+        $sortColumn = $request->get('sort', 'updated_at');
+        $orderBy = $request->get('order', 'asc');
+        $perPage = $request->get('per_page', config('constants.pagination.per_page'));
+        $currentPage = $request->get('page', 1);
+
+        $data = $this->bikeModel
+            // ->orderBy($sortColumn, $orderBy)
+            ->paginate($perPage, $columns, 'page', $currentPage);
+        $collection = new PaginatedCollection($data, BikeResource::class);
+        $response = $collection->toArray($request);
+        return $this->successResponse($response);
+    }
+
+    public function show($id, Request $request)
+    {
+        $data = $this->bikeModel->find($id);
+        $resource = new BikeResource($data);
+        $resource->withDetails = true;
+        $response = $resource->toArray($request);
+        return $this->successResponse($response);
+    }
+
+    public function all(Request $request)
+    {
+        $columns = ['*'];
+        $sortColumn = $request->get('sort', 'updated_at');
+        $orderBy = $request->get('order', 'asc');
+
+        $data = $this->bikeModel
+            // ->orderBy($sortColumn, $orderBy)
+            ->get();
+        $collection = BikeResource::collection($data);
+        $response = $collection->toArray($request);
+        return $this->successResponse($response);
+    }
+
     public function store(BikeRequest $request)
     {
         $attribute = $request->validated();
@@ -37,25 +68,6 @@ class BikeController extends APIController
         return $this->successResponse('Bike created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $bike = Bike::find($id);
-        return $bike;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         try {
@@ -66,12 +78,6 @@ class BikeController extends APIController
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         try {

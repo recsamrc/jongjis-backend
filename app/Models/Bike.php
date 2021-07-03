@@ -6,6 +6,8 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic as ImageManager;
 
 class Bike extends Model
 {
@@ -27,7 +29,14 @@ class Bike extends Model
     ];
     // protected $hidden = [];
     // protected $dates = [];
-    public $timestamps = false;
+    protected $attributes = [
+        'bike_name' => '',
+        'description' => '',
+        'weight' => '',
+        'height' => '',
+        'rent_price' => '',
+        'availability' => true,
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -66,6 +75,17 @@ class Bike extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getFeatureImageUrlAttribute()
+    {
+        $featureImage = $this->images()->where('is_featured', true)->first();
+        if ($featureImage == null)
+            $featureImage = $this->images()->first();
+        
+        $featureImageUrl = '';
+        if ($featureImage != null)
+            $featureImageUrl = $featureImage->file;
+        return $featureImageUrl;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -73,13 +93,4 @@ class Bike extends Model
     |--------------------------------------------------------------------------
     */
 
-    /*
-    |--------------------------------------------------------------------------
-    | HELPERS
-    |--------------------------------------------------------------------------
-    */
-    protected function storeImage($imageFile)
-    {
-        return Storage::put('/images', $imageFile);
-    }
 }

@@ -23,7 +23,6 @@ class Shop extends Model
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
-    public $timestamps = false;
 
     /*
     |--------------------------------------------------------------------------
@@ -58,5 +57,7 @@ class Shop extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-
+    public function setImagePathAttribute($value)
+    {
+    }
 }

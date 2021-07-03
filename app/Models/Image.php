@@ -4,10 +4,19 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Image extends Model
 {
     use CrudTrait;
+
+    /*
+    |--------------------------------------------------------------------------
+    | CONSTANTS
+    |--------------------------------------------------------------------------
+    */
+    const TYPE_BIKE = 'bike';
+    const TYPE_SHOP = 'shop';
 
     /*
     |--------------------------------------------------------------------------
@@ -22,14 +31,10 @@ class Image extends Model
     protected $fillable = ['is_featured', 'file', 'image_type', 'related_id'];
     // protected $hidden = [];
     // protected $dates = [];
-    public $timestamps = false;
     protected $attributes = [
-        'file_url' => '',
+        'file' => '',
         'is_featured' => 0,
     ];
-
-    const TYPE_BIKE = 'type_bike';
-    const TYPE_SHOP = 'type_shop';
 
     /*
     |--------------------------------------------------------------------------
@@ -54,6 +59,15 @@ class Image extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getFileAttribute($value)
+    {
+        return route('file.image', $value);
+    }
+
+    public function getFilePathAttribute()
+    {
+        return config('constants.image.dir.base') . '/' . $this->attributes['file'];
+    }
 
     /*
     |--------------------------------------------------------------------------

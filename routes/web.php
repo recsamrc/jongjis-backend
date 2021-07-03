@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Common\FileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
 
+Route::get('/images/{path}', [FileController::class, 'image'])->where('path', '.*')->name('file.image');
 Route::post('/register', [RegisterController::class, 'register']);

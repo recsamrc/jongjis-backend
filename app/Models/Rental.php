@@ -23,7 +23,6 @@ class Rental extends Model
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
-    public $timestamps = false;
 
     /*
     |--------------------------------------------------------------------------

@@ -23,17 +23,16 @@ class User extends Authenticatable
     // public $timestamps = false;
     protected $guarded = ['id'];
     protected $fillable = [
-        'username', 'password', 'avatar', 'fullname', 'contact', 'email',
+        'username', 'password', 'profile', 'fullname', 'contact', 'email',
         'user_group_id', 'status'
     ];
     protected $hidden = ['password', 'remember_token'];
     // protected $dates = [];
-    public $timestamps = false;
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
     protected $attributes = [
-        'avatar' => '',
+        'profile' => '',
         'user_group_id' => 2,
         'status' => 1,
     ];

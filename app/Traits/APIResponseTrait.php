@@ -6,7 +6,7 @@ use Illuminate\Http\Response;
 
 trait APIResponseTrait
 {
-    public function successResponse($result)
+    public function successResponse($result, $code = Response::HTTP_OK)
     {
         $response = [];
 
@@ -18,7 +18,7 @@ trait APIResponseTrait
         if (is_array($result) && isset($result['pagination']))
             $response['pagination'] = $result['pagination'];
 
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($response, $code);
     }
 
     public function successStatusResponse($result = null)

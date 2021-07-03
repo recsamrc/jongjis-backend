@@ -18,15 +18,16 @@ class BikeResource extends JsonResource
     {
         return
             $this->withDetails ? [
-                'id' => $this->id,
-                'bike_name' => $this->bike_name,
-                'feature_image' => $this->feature_image_url,
-                'description' => $this->description,
+                'id' => (string) $this->id,
+                'bike_name' => (string) $this->bike_name,
+                'feature_image' => (string) $this->feature_image_url,
+                'description' => (string) $this->description,
                 'images' => ImageResource::collection($this->images),
             ] : [
-                'id' => $this->id,
-                'bike_name' => $this->bike_name,
-                'feature_image' => $this->feature_image_url,
+                'id' => (string) $this->id,
+                'bike_name' => (string) $this->bike_name,
+                'rent_price' => (string) $this->rent_price,
+                'feature_image' => (string) $this->feature_image_url,
             ];
     }
 }

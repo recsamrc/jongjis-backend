@@ -20,6 +20,15 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::group([
+    'prefix' => '/bike',
+    'as' => 'bike.'
+], function () {
+   Route::get('/', [BikeController::class, 'index'])->name('index'); 
+   Route::get('/all', [BikeController::class, 'all'])->name('all'); 
+   Route::get('/{bike}', [BikeController::class, 'show'])->name('show'); 
+});
+
 Route::get('/bike/all', [BikeController::class, 'all']);
 Route::apiResources([
     '/bike' => BikeController::class,

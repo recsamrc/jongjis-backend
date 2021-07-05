@@ -175,9 +175,9 @@ class ShopCrudController extends CrudController
     public function store()
     {
         $this->crud->hasAccessOrFail('create');
+        $this->crud->getRequest()->request->add(['updated_by'=> backpack_user()->id]);
 
         $request = $this->crud->validateRequest();
-        $request->add(['updated_by'=> backpack_user()->id]);
         $images = $request->get('images');
 
         $item = $this->crud->create($this->crud->getStrippedSaveRequest());

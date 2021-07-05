@@ -24,10 +24,10 @@ class ShopResource extends JsonResource
                 'address' => (string) $this->address,
                 'cover_image' => (string) '',
                 'opening_hours' => (string) '',
-                'bikes_count' => (string) $bikes->count(),
-                'bikes_booked_count' => (string) 0,
-                'bikes_available_count' => (string)  $bikes->where('avaliablity', 1)->count(),
-                'bikes_unavailable_count' => (string)  $bikes->where('avaliablity', 0)->count(),
+                'bikes_count' => (int) $bikes->count(),
+                'bikes_booked_count' => (int) 0,
+                'bikes_available_count' => (int)  $bikes->where('avaliablity', 1)->count(),
+                'bikes_unavailable_count' => (int)  $bikes->where('avaliablity', 0)->count(),
                 'bikes' => BikeResource::collection($bikes),
             ];
         } else {

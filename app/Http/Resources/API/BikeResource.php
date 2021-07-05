@@ -26,7 +26,8 @@ class BikeResource extends JsonResource
             ] : [
                 'id' => (string) $this->id,
                 'bike_name' => (string) $this->bike_name,
-                'rent_price' => (string) $this->rent_price,
+                'rent_price' => (float) $this->rent_price,
+                'description' => (string) $this->description,
                 'feature_image' => (string) $this->feature_image_url,
                 'avalibility' => (bool) $this->avaliablity,
             ];

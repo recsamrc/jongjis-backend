@@ -28,6 +28,7 @@ class BikeResource extends JsonResource
                 'bike_name' => (string) $this->bike_name,
                 'rent_price' => (string) $this->rent_price,
                 'feature_image' => (string) $this->feature_image_url,
+                'avalibility' => (bool) $this->avaliablity,
             ];
     }
 }

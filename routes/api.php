@@ -29,8 +29,11 @@ Route::group([
    Route::get('/{bike}', [BikeController::class, 'show'])->name('show'); 
 });
 
-Route::get('/bike/all', [BikeController::class, 'all']);
-Route::apiResources([
-    '/bike' => BikeController::class,
-    '/shop' => ShopController::class,
-]);
+Route::group([
+    'prefix' => '/shop',
+    'as' => 'shop.'
+], function () {
+   Route::get('/', [ShopController::class, 'index'])->name('index'); 
+   Route::get('/all', [ShopController::class, 'all'])->name('all'); 
+   Route::get('/{shop}', [ShopController::class, 'show'])->name('show'); 
+});

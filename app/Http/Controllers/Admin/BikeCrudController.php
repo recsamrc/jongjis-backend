@@ -92,7 +92,7 @@ class BikeCrudController extends CrudController
             'name' => 'availability',
             'label' => 'Availability',
             'type' => 'boolean',
-            'options' => [0 => 'Available', 1 => 'Not Available'],
+            'options' => [1 => 'Available', 0 => 'Not Available'],
         ]);
         CRUD::addColumn([
             'name' => 'description',

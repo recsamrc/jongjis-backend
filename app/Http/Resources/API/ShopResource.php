@@ -16,11 +16,28 @@ class ShopResource extends JsonResource
 
     public function toArray($request)
     {
-        return
-            $this->withDetails ? [] : [
+        $bikes = $this->bikes;
+        if ($this->withDetails) {
+            return [
                 'id' => (string) $this->id,
                 'shop_name' => (string) $this->shop_name,
-                'tel' => (string) $this->contact, 
+                'address' => (string) $this->address,
+                'cover_image' => (string) '',
+                'opening_hours' => (string) '',
+                'bikes_count' => (string) $bikes->count(),
+                'bikes_booked_count' => (string) 0,
+                'bikes_available_count' => (string)  $bikes->where('avaliablity', 1)->count(),
+                'bikes_unavailable_count' => (string)  $bikes->where('avaliablity', 0)->count(),
+                'bikes' => BikeResource::collection($bikes),
             ];
+        } else {
+            return  [
+                'id' => (string) $this->id,
+                'shop_name' => (string) $this->shop_name,
+                'opening_hours' => (string) '',
+                'tel' => (string) $this->contact_no,
+                'feature' => (string) '',
+            ];
+        }
     }
 }

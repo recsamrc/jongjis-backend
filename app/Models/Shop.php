@@ -40,6 +40,11 @@ class Shop extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
+    public function bikes()
+    {
+        return $this->hasMany(Bike::class, 'shop_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

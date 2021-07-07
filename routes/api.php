@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BikeController;
 use App\Http\Controllers\API\ShopController;
 use Illuminate\Http\Request;
@@ -19,6 +20,18 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+Route::group([
+    'prefix' => 'auth',
+    'as' => 'auth.'
+], function ($router) {
+    Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [AuthController::class, 'register'])->name('register');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
+    Route::post('me', [AuthController::class, 'me'])->name('me');
+
+});
 
 Route::group([
     'prefix' => '/bike',

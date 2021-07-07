@@ -5,8 +5,9 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Client extends Model
+class Client extends Model implements JWTSubject
 {
     use HasFactory, CrudTrait;
 
@@ -29,6 +30,15 @@ class Client extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     /*
     |--------------------------------------------------------------------------

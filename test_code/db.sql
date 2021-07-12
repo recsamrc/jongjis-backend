@@ -221,3 +221,8 @@ ALTER TABLE `tbl_shops`
 
 ALTER TABLE `tbl_users`
   ADD CONSTRAINT `tbl_users_ibfk_1` FOREIGN KEY (`user_group_id`) REFERENCES `tbl_user_groups` (`id`);
+ALTER TABLE `tbl_clients` 
+ CHANGE `email_address` `email` VARCHAR(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+ALTER TABLE `tbl_clients`
+ CHANGE `complete_address` `address` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+ALTER TABLE `tbl_clients` CHANGE `password` `password` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;

@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class Client extends Model implements JWTSubject
+class Client extends Authenticatable implements JWTSubject
 {
     use HasFactory, CrudTrait;
 
@@ -21,8 +21,11 @@ class Client extends Model implements JWTSubject
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
-    // protected $hidden = [];
+    protected $fillable = [
+        'client_code', 'email', 'client_name', 'username', 'password', 'contact_number',
+        'address', 'profile', 'status', 
+    ];
+    protected $hidden = ['password', 'remember_token'];
     // protected $dates = [];
 
     /*

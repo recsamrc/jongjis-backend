@@ -19,7 +19,7 @@ class AuthController extends APIController
     {
         $credentials = request(['email', 'password']);
 
-        if (!$token = $this->guard('api')->attempt($credentials)) {
+        if (!$token = auth()->guard('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -34,7 +34,7 @@ class AuthController extends APIController
         $attributes['password'] = Hash::make($attributes['password']);
         Client::create($attributes);
 
-        $token = $this->guard()->attempt($credentials);
+        $token = auth()->guard()->attempt($credentials);
         return $this->respondWithToken($token);
     }
 

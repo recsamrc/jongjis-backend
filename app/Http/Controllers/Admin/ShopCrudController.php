@@ -93,6 +93,16 @@ class ShopCrudController extends CrudController
             'type' => 'text',
         ]);
         CRUD::addColumn([
+            'name' => 'map_lat',
+            'label' => 'Address: Latitude',
+            'type' => 'text',
+        ]);
+        CRUD::addColumn([
+            'name' => 'map_lng',
+            'label' => 'Address: Longitude',
+            'type' => 'text',
+        ]);
+        CRUD::addColumn([
             'name' => 'email_address',
             'label' => 'Shop Email Address',
             'type' => 'text',
@@ -138,6 +148,16 @@ class ShopCrudController extends CrudController
         CRUD::addField([
             'name' => 'address',
             'label' => 'Shop Address',
+            'type' => 'text',
+        ]);
+        CRUD::addField([
+            'name' => 'map_lat',
+            'label' => 'Address: Latitude',
+            'type' => 'text',
+        ]);
+        CRUD::addField([
+            'name' => 'map_lng',
+            'label' => 'Address: Longitude',
             'type' => 'text',
         ]);
         CRUD::addField([

@@ -22,7 +22,7 @@ class ShopResource extends JsonResource
                 'id' => (string) $this->id,
                 'shop_name' => (string) $this->shop_name,
                 'address' => (string) $this->address,
-                'cover_image' => (string) '',
+                'cover_image' => (string) $this->cover,
                 'opening_hours' => (string) $this->getOpeningHours(),
                 'bikes_count' => (int) $bikes->count(),
                 'bikes_booked_count' => (int) 0,
@@ -36,7 +36,7 @@ class ShopResource extends JsonResource
                 'shop_name' => (string) $this->shop_name,
                 'opening_hours' => (string) $this->getOpeningHours(),
                 'tel' => (string) $this->contact_no,
-                'feature' => (string) '',
+                'cover_image' => (string) $this->cover,
             ];
         }
     }

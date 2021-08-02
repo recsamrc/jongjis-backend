@@ -176,7 +176,7 @@ class ShopCrudController extends CrudController
             'type' => 'url',
         ]);
         CRUD::addField([
-            'name' => 'image',
+            'name' => 'cover',
             'label' => 'Cover',
             'type' => 'image',
         ]);

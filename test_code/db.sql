@@ -226,3 +226,5 @@ ALTER TABLE `tbl_clients`
 ALTER TABLE `tbl_clients`
  CHANGE `complete_address` `address` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
 ALTER TABLE `tbl_clients` CHANGE `password` `password` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+
+ALTER TABLE `tbl_shops` ADD `cover` VARCHAR(255) NOT NULL AFTER `map_lng`;

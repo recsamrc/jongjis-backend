@@ -26,4 +26,7 @@ Route::group([
     Route::crud('penalty', 'PenaltyCrudController');
     Route::crud('advertisement', 'AdvertisementCrudController');
     Route::crud('image', 'ImageCrudController');
+
+    Route::get('rental/ajax-client-options', 'RentalCrudController@clientOptions');
+    Route::post('rental/{id}/update-payment-status', 'RentalCrudController@updatePaymentStatus');
 }); // this should be the absolute last line of this file

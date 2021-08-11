@@ -23,6 +23,10 @@ class Rental extends Model
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $attributes = [
+        'payment_status' => false,
+        'rental_status' => false,
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -35,6 +39,15 @@ class Rental extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function bike()
+    {
+        return $this->belongsTo(Bike::class, 'bike_id', 'id');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id', 'id');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -47,6 +60,10 @@ class Rental extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getShopNameAttribute()
+    {
+        return (string) $this->bike->shop->shop_name;
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -228,3 +228,7 @@ ALTER TABLE `tbl_clients`
 ALTER TABLE `tbl_clients` CHANGE `password` `password` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
 
 ALTER TABLE `tbl_shops` ADD `cover` VARCHAR(255) NOT NULL AFTER `map_lng`;
+
+ALTER TABLE `tbl_rentals` DROP FOREIGN KEY `tbl_rentals_ibfk_1`;
+ALTER TABLE `tbl_rentals` DROP INDEX `user_id`;
+ALTER TABLE `tbl_rentals` DROP `user_id`;

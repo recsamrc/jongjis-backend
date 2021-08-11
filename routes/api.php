@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BikeController;
+use App\Http\Controllers\API\RentalController;
 use App\Http\Controllers\API\ShopController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -49,4 +50,11 @@ Route::group([
    Route::get('/', [ShopController::class, 'index'])->name('index'); 
    Route::get('/all', [ShopController::class, 'all'])->name('all'); 
    Route::get('/{shop}', [ShopController::class, 'show'])->name('show'); 
+});
+
+Route::group([
+    'prefix' => '',
+    'as' => 'rental.'
+], function () {
+   Route::post('/book', [RentalController::class, 'book'])->name('book'); 
 });
